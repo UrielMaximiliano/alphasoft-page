@@ -56,8 +56,20 @@ const Contact: React.FC = () => {
           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Trabajemos Juntos
           </h2>
+          
+          {/* Logo */}
+          <div className="flex justify-center mb-6">
+            <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-lg">
+              <img 
+                src="/logo.jpg" 
+                alt="AlphaSoft Logo" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            ¿Listo para transformar tus ideas en realidad? Ponte en contacto con nuestro equipo.
+            ¿Listo para transformar tus ideas en realidad? Estamos aquí para ayudarte a crear soluciones innovadoras.
           </p>
         </div>
 
@@ -148,7 +160,8 @@ const Contact: React.FC = () => {
               </h3>
               <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
                 Ya seas una startup buscando construir tu primer producto o una empresa 
-                que busca modernizar sus sistemas, estamos aquí para ayudarte a tener éxito.
+                que busca modernizar sus sistemas, estamos aquí para aplicar nuestros conocimientos 
+                y ayudarte a tener éxito.
               </p>
             </div>
 

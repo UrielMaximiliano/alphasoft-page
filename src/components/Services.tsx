@@ -1,7 +1,6 @@
 import React from 'react';
 import { 
   Code2, 
-  Smartphone, 
   Globe, 
   Bot,
   Zap
@@ -28,27 +27,22 @@ const Services: React.FC = () => {
     {
       icon: <Code2 size={24} />,
       title: "Desarrollo Personalizado",
-      description: "Soluciones de software a medida construidas con tecnologías modernas y mejores prácticas."
-    },
-    {
-      icon: <Smartphone size={24} />,
-      title: "Aplicaciones Móviles",
-      description: "Aplicaciones móviles nativas y multiplataforma con experiencia de usuario excepcional."
+      description: "Soluciones de software a medida construidas con las mejores prácticas y tecnologías modernas."
     },
     {
       icon: <Globe size={24} />,
       title: "Aplicaciones Web",
-      description: "Aplicaciones web responsivas, rápidas y escalables que impulsan el crecimiento empresarial."
+      description: "Aplicaciones web responsivas y escalables que ayudan a impulsar el crecimiento de tu negocio."
     },
     {
       icon: <Bot size={24} />,
       title: "Chatbots Inteligentes",
-      description: "Chatbots con IA que mejoran la atención al cliente y automatizan conversaciones."
+      description: "Chatbots con IA que mejoran la atención al cliente y automatizan conversaciones de manera eficiente."
     },
     {
       icon: <Zap size={24} />,
       title: "Automatizaciones",
-      description: "Automatiza procesos empresariales para aumentar la eficiencia y reducir costos operativos."
+      description: "Automatizamos procesos empresariales para aumentar la eficiencia y optimizar costos operativos."
     }
   ];
 
@@ -59,8 +53,20 @@ const Services: React.FC = () => {
           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Nuestros Servicios
           </h2>
+          
+          {/* Logo */}
+          <div className="flex justify-center mb-6">
+            <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-lg">
+              <img 
+                src="/logo.jpg" 
+                alt="AlphaSoft Logo" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Soluciones de software integrales diseñadas para elevar tu negocio
+            Soluciones de software integrales desarrolladas con dedicación y conocimiento técnico
           </p>
         </div>
         

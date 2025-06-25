@@ -35,8 +35,8 @@ const Hero: React.FC = () => {
             className={`mt-8 text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed ${isVisible ? 'fade-in' : 'opacity-0'}`}
             style={{ animationDelay: '0.3s' }}
           >
-            Creamos soluciones de software elegantes y poderosas que transforman negocios. 
-            Código limpio, diseño hermoso, resultados excepcionales.
+            Creamos soluciones de software innovadoras con dedicación y creatividad. 
+            Código limpio, diseño hermoso, resultados que superan expectativas.
           </p>
 
           <div 
@@ -59,6 +59,20 @@ const Hero: React.FC = () => {
                 {tech}
               </div>
             ))}
+          </div>
+
+          {/* Logo decorativo */}
+          <div 
+            className={`mt-12 flex justify-center ${isVisible ? 'fade-in' : 'opacity-0'}`}
+            style={{ animationDelay: '0.6s' }}
+          >
+            <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-lg">
+              <img 
+                src="/logo.jpg" 
+                alt="AlphaSoft Logo" 
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </div>
       </div>

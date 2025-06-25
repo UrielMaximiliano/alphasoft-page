@@ -33,13 +33,26 @@ const About: React.FC = () => {
             <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
               Acerca de AlphaSoft
             </h2>
+            
+            {/* Logo */}
+            <div className="flex justify-center mb-8">
+              <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-lg">
+                <img 
+                  src="/logo.jpg" 
+                  alt="AlphaSoft Logo" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-              Somos un equipo de desarrolladores y diseñadores apasionados que creemos en el poder del 
-              código limpio y eficiente, y en las experiencias de usuario hermosas.
+              Somos estudiantes de Ingeniería en Sistemas apasionados por el desarrollo de software. 
+              Creemos en el poder del código limpio y eficiente, y en crear experiencias de usuario hermosas.
             </p>
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-              Fundada sobre los principios de innovación y excelencia, AlphaSoft entrega 
-              soluciones de software que no solo satisfacen las necesidades de hoy, sino que anticipan los desafíos del mañana.
+              Fundada sobre los principios de innovación, aprendizaje continuo y excelencia, AlphaSoft 
+              entrega soluciones que no solo satisfacen las necesidades actuales, sino que demuestran 
+              nuestro compromiso con el crecimiento y la mejora constante.
             </p>
             
             <div className="bg-gray-50 dark:bg-gray-700 rounded-2xl p-8">
@@ -47,8 +60,8 @@ const About: React.FC = () => {
                 Nuestra Misión
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                Empoderar a las empresas con soluciones de software innovadoras que impulsen el crecimiento, 
-                la eficiencia y el éxito en la era digital.
+                Aplicar nuestros conocimientos y pasión por la tecnología para crear soluciones de software 
+                innovadoras que ayuden a las empresas a crecer y tener éxito en la era digital.
               </p>
             </div>
           </div>
@@ -61,31 +74,41 @@ const About: React.FC = () => {
                   Nuestro Equipo
                 </h3>
                 
-                {/* Círculos para fotos del equipo */}
+                {/* Fotos del equipo */}
                 <div className="flex justify-center items-center gap-8 mb-6">
-                  <div className="relative group">
-                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center border-4 border-white dark:border-gray-700 shadow-lg cursor-pointer hover:scale-105 transition-transform">
-                      <span className="text-white font-semibold text-sm">Foto 1</span>
+                  <div className="relative group text-center">
+                    <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-lg cursor-pointer hover:scale-105 transition-transform mx-auto mb-2">
+                      <img 
+                        src="/foto-nico.jpg" 
+                        alt="Nico - Estudiante de Ingeniería en Sistemas" 
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 opacity-20 group-hover:opacity-30 transition-opacity -z-10"></div>
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white">Nico</h4>
                   </div>
                   
-                  <div className="relative group">
-                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center border-4 border-white dark:border-gray-700 shadow-lg cursor-pointer hover:scale-105 transition-transform">
-                      <span className="text-white font-semibold text-sm">Foto 2</span>
+                  <div className="relative group text-center">
+                    <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-lg cursor-pointer hover:scale-105 transition-transform mx-auto mb-2">
+                      <img 
+                        src="/foto-uriel.jpg" 
+                        alt="Uriel - Estudiante de Ingeniería en Sistemas" 
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 opacity-20 group-hover:opacity-30 transition-opacity -z-10"></div>
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white">Uriel</h4>
                   </div>
                 </div>
                 
-                <p className="text-gray-600 dark:text-gray-300 text-center text-sm mb-4">
-                  Haz clic en los círculos para agregar fotos de tu equipo
-                </p>
-                
                 <div className="text-center">
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    Somos estudiantes apasionados de Ingeniería en Sistemas, comprometidos con la excelencia 
+                    y la innovación en el desarrollo de software.
+                  </p>
                   <p className="text-gray-600 dark:text-gray-300">
-                    Un equipo dedicado a crear soluciones excepcionales con pasión por la innovación 
-                    y el desarrollo de software de alta calidad.
+                    Aunque estamos en formación, nuestra dedicación, creatividad y ganas de aprender 
+                    nos permiten entregar soluciones de calidad que superan las expectativas.
                   </p>
                 </div>
               </div>

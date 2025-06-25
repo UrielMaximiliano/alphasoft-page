@@ -8,16 +8,19 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="p-2 rounded-lg bg-blue-600 text-white">
-                <Zap size={20} />
+              <div className="w-8 h-8 rounded-lg overflow-hidden">
+                <img 
+                  src="/logo.jpg" 
+                  alt="AlphaSoft Logo" 
+                  className="w-full h-full object-cover"
+                />
               </div>
               <span className="font-bold text-xl text-gray-900 dark:text-white">
                 AlphaSoft
               </span>
             </div>
             <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md">
-              Construyendo soluciones de software excepcionales con código limpio, diseño hermoso 
-              y pensamiento innovador.
+              Construimos soluciones de software con código limpio y un enfoque innovador.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
@@ -37,7 +40,6 @@ const Footer: React.FC = () => {
             <ul className="space-y-2">
               {[
                 "Desarrollo Personalizado",
-                "Aplicaciones Móviles",
                 "Aplicaciones Web",
                 "Chatbots Inteligentes",
                 "Automatizaciones"

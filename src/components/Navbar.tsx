@@ -31,8 +31,12 @@ const Navbar: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <a href="#" className="flex items-center gap-2 group">
-              <div className="p-2 rounded-lg bg-blue-600 text-white group-hover:bg-blue-700 transition-colors">
-                <Zap size={20} />
+              <div className="w-8 h-8 rounded-lg overflow-hidden group-hover:scale-105 transition-transform">
+                <img 
+                  src="/logo.jpg" 
+                  alt="AlphaSoft Logo" 
+                  className="w-full h-full object-cover"
+                />
               </div>
               <span className="font-bold text-xl text-gray-900 dark:text-white">
                 AlphaSoft
