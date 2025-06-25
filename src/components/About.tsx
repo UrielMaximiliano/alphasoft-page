@@ -36,10 +36,6 @@ const About: React.FC = () => {
               Acerca de AlphaSoft
             </h2>
             
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-              Somos estudiantes de Ingeniería en Sistemas apasionados por el desarrollo de software. 
-              Creemos en el poder del código limpio y eficiente, y en crear experiencias de usuario hermosas.
-            </p>
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
               Fundada sobre los principios de innovación, aprendizaje continuo y excelencia, AlphaSoft 
               entrega soluciones que no solo satisfacen las necesidades actuales, sino que demuestran 

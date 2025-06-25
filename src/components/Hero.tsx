@@ -36,7 +36,7 @@ const Hero: React.FC = () => {
             style={{ animationDelay: '0.3s' }}
           >
             Creamos soluciones de software innovadoras con dedicación y creatividad. 
-            Código limpio, diseño hermoso, resultados que superan expectativas.
+            Código limpio, arquitectura robusta y resultados que superan expectativas.
           </p>
 
           <div 

@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { Send, Mail, MapPin, Phone, CheckCircle } from 'lucide-react';
+import emailjs from 'emailjs-com';
+import { FaInstagram } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
+import { GoLocation } from 'react-icons/go';
 
 const Contact: React.FC = () => {
   const [formState, setFormState] = useState({
@@ -10,6 +14,7 @@ const Contact: React.FC = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -19,33 +24,40 @@ const Contact: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-      setFormState({ name: '', email: '', message: '' });
-      
-      setTimeout(() => {
-        setSubmitted(false);
-      }, 5000);
-    }, 1500);
+    setError(null);
+
+    // Reemplaza estos valores con los tuyos de EmailJS
+    const SERVICE_ID = 'service_x376u74';
+    const TEMPLATE_ID = 'template_wliji8o';
+    const USER_ID = 'ikCCwHpc74TUb7fYy';
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+      name: formState.name,
+      email: formState.email,
+      title: formState.message,
+    }, USER_ID)
+      .then(() => {
+        setIsSubmitting(false);
+        setSubmitted(true);
+        setFormState({ name: '', email: '', message: '' });
+        setTimeout(() => setSubmitted(false), 5000);
+      })
+      .catch(() => {
+        setIsSubmitting(false);
+        setError('Ocurrió un error al enviar el mensaje. Intenta nuevamente.');
+      });
   };
 
   const contactInfo = [
     {
       icon: <Mail size={20} />,
       title: "Email",
-      content: "hola@alphasoft.com"
-    },
-    {
-      icon: <Phone size={20} />,
-      title: "Teléfono",
-      content: "+1 (555) 123-4567"
+      content: "alphasoftwebs@gmail.com"
     },
     {
       icon: <MapPin size={20} />,
       title: "Ubicación",
-      content: "San Francisco, CA"
+      content: "Corrientes Capital"
     }
   ];
 
@@ -141,30 +153,23 @@ const Contact: React.FC = () => {
             )}
           </div>
 
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                Ponte en Contacto
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                Ya seas una startup buscando construir tu primer producto o una empresa 
-                que busca modernizar sus sistemas, estamos aquí para aplicar nuestros conocimientos 
-                y ayudarte a tener éxito.
-              </p>
+          {/* Contacto lateral tipo lista con título y texto */}
+          <div className="flex flex-col gap-6 justify-center">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Ponte en Contacto</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+              Ya seas una startup buscando construir tu primer producto o una empresa que busca modernizar sus sistemas, estamos aquí para aplicar nuestros conocimientos y ayudarte a tener éxito.
+            </p>
+            <div className="flex items-center gap-3">
+              <FaInstagram size={24} className="text-pink-500" />
+              <a href="https://instagram.com/alphasoft_web/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-medium">@alphasoft_web</a>
             </div>
-
-            <div className="space-y-6">
-              {contactInfo.map((item, index) => (
-                <div key={index} className="flex items-center gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white">{item.title}</h4>
-                    <p className="text-gray-600 dark:text-gray-300">{item.content}</p>
-                  </div>
-                </div>
-              ))}
+            <div className="flex items-center gap-3">
+              <MdEmail size={24} className="text-blue-600" />
+              <a href="mailto:alphasoftwebs@gmail.com" className="text-blue-600 hover:underline font-medium">alphasoftwebs@gmail.com</a>
+            </div>
+            <div className="flex items-center gap-3">
+              <GoLocation size={24} className="text-green-600" />
+              <span className="text-blue-600 font-medium">Corrientes Capital</span>
             </div>
           </div>
         </div>

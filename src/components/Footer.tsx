@@ -1,5 +1,6 @@
 import React from 'react';
-import { Zap, Github, Twitter, Linkedin } from 'lucide-react';
+import { Zap, Github, Mail } from 'lucide-react';
+import { FaInstagram } from 'react-icons/fa';
 
 const Footer: React.FC = () => {
   return (
@@ -12,17 +13,14 @@ const Footer: React.FC = () => {
                 AlphaSoft
               </span>
             </div>
-            <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md">
-              Construimos soluciones de software con código limpio y un enfoque innovador.
-            </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                <Twitter size={20} />
+              <a href="https://instagram.com/alphasoft_web/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <FaInstagram size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                <Linkedin size={20} />
+              <a href="mailto:alphasoftwebs@gmail.com" className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <Mail size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 <Github size={20} />
               </a>
             </div>
@@ -74,9 +72,6 @@ const Footer: React.FC = () => {
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-500 dark:text-gray-400 text-sm mb-4 md:mb-0">
             &copy; {new Date().getFullYear()} AlphaSoft. Todos los derechos reservados.
-          </p>
-          <p className="text-gray-500 dark:text-gray-400 text-sm">
-            Hecho con ❤️ para la innovación
           </p>
         </div>
       </div>
