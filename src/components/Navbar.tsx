@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Zap } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
+import logo from '../assets/logo.jpg';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,9 +32,9 @@ const Navbar: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <a href="#" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 rounded-lg overflow-hidden group-hover:scale-105 transition-transform">
+              <div className="w-8 h-8 rounded-lg overflow-hidden group-hover:scale-105 transition-transform bg-white dark:bg-gray-900">
                 <img 
-                  src="/logo.jpg" 
+                  src={logo} 
                   alt="AlphaSoft Logo" 
                   className="w-full h-full object-cover"
                 />

@@ -56,18 +56,6 @@ const Contact: React.FC = () => {
           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Trabajemos Juntos
           </h2>
-          
-          {/* Logo */}
-          <div className="flex justify-center mb-6">
-            <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-lg">
-              <img 
-                src="/logo.jpg" 
-                alt="AlphaSoft Logo" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-          
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             ¿Listo para transformar tus ideas en realidad? Estamos aquí para ayudarte a crear soluciones innovadoras.
           </p>

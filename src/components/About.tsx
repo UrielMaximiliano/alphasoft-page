@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import fotoNico from '../assets/foto-nico.jpg';
+import fotoUriel from '../assets/foto-uriel.jpg';
 
 const About: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -34,17 +36,6 @@ const About: React.FC = () => {
               Acerca de AlphaSoft
             </h2>
             
-            {/* Logo */}
-            <div className="flex justify-center mb-8">
-              <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-lg">
-                <img 
-                  src="/logo.jpg" 
-                  alt="AlphaSoft Logo" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
               Somos estudiantes de Ingeniería en Sistemas apasionados por el desarrollo de software. 
               Creemos en el poder del código limpio y eficiente, y en crear experiencias de usuario hermosas.
@@ -79,7 +70,7 @@ const About: React.FC = () => {
                   <div className="relative group text-center">
                     <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-lg cursor-pointer hover:scale-105 transition-transform mx-auto mb-2">
                       <img 
-                        src="/foto-nico.jpg" 
+                        src={fotoNico} 
                         alt="Nico - Estudiante de Ingeniería en Sistemas" 
                         className="w-full h-full object-cover"
                       />
@@ -91,7 +82,7 @@ const About: React.FC = () => {
                   <div className="relative group text-center">
                     <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-lg cursor-pointer hover:scale-105 transition-transform mx-auto mb-2">
                       <img 
-                        src="/foto-uriel.jpg" 
+                        src={fotoUriel} 
                         alt="Uriel - Estudiante de Ingeniería en Sistemas" 
                         className="w-full h-full object-cover"
                       />

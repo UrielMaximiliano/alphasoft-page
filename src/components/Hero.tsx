@@ -60,20 +60,6 @@ const Hero: React.FC = () => {
               </div>
             ))}
           </div>
-
-          {/* Logo decorativo */}
-          <div 
-            className={`mt-12 flex justify-center ${isVisible ? 'fade-in' : 'opacity-0'}`}
-            style={{ animationDelay: '0.6s' }}
-          >
-            <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-lg">
-              <img 
-                src="/logo.jpg" 
-                alt="AlphaSoft Logo" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
         </div>
       </div>
     </section>
