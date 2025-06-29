@@ -161,7 +161,7 @@ const Contact: React.FC = () => {
             </p>
             <div className="flex items-center gap-3">
               <FaInstagram size={24} className="text-pink-500" />
-              <a href="https://instagram.com/alphasoft_web/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-medium">@alphasoft_web</a>
+              <a href="https://www.instagram.com/alphasoft__/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-medium">@alphasoft__</a>
             </div>
             <div className="flex items-center gap-3">
               <MdEmail size={24} className="text-blue-600" />

@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
               </span>
             </div>
             <div className="flex space-x-4">
-              <a href="https://instagram.com/alphasoft_web/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              <a href="https://www.instagram.com/alphasoft__/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 <FaInstagram size={20} />
               </a>
               <a href="mailto:alphasoftwebs@gmail.com" className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
