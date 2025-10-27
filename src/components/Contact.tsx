@@ -48,47 +48,49 @@ const Contact: React.FC = () => {
       });
   };
 
-  const contactInfo = [
-    {
-      icon: <Mail size={20} />,
-      title: "Email",
-      content: "alphasoftwebs@gmail.com"
-    },
-    {
-      icon: <MapPin size={20} />,
-      title: "Ubicación",
-      content: "Corrientes Capital"
-    }
-  ];
 
   return (
-    <section id="contact" className="py-24 bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+    <section id="contact" className="relative py-32 bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900 overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute top-1/4 left-0 w-96 h-96 bg-blue-400/10 dark:bg-blue-500/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-cyan-400/10 dark:bg-cyan-500/5 rounded-full blur-3xl"></div>
+
+      <div className="relative max-w-7xl mx-auto px-6">
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-semibold text-sm mb-6">
+            <Mail size={16} />
+            Contáctanos
+          </div>
+          <h2 className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6">
             Trabajemos Juntos
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-light">
             ¿Listo para transformar tus ideas en realidad? Estamos aquí para ayudarte a crear soluciones innovadoras.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
+          <div className="relative group">
+            {/* Gradient background effect */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl opacity-0 group-hover:opacity-10 blur-2xl transition-all duration-500"></div>
+            <div className="relative bg-white dark:bg-gray-800 rounded-3xl p-10 shadow-2xl border border-gray-200 dark:border-gray-700">
             {submitted ? (
-              <div className="text-center py-12">
-                <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle size={32} />
+              <div className="text-center py-16">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-green-500 rounded-full blur-2xl opacity-20 animate-pulse"></div>
+                  <div className="relative w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
+                    <CheckCircle size={40} />
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">¡Gracias!</h3>
-                <p className="text-gray-600 dark:text-gray-300">
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">¡Mensaje Enviado!</h3>
+                <p className="text-lg text-gray-600 dark:text-gray-300">
                   Te responderemos dentro de 24 horas.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <div className="space-y-2">
+                  <label htmlFor="name" className="block text-sm font-bold text-gray-700 dark:text-gray-300">
                     Nombre
                   </label>
                   <input
@@ -98,12 +100,12 @@ const Contact: React.FC = () => {
                     value={formState.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    className="w-full px-5 py-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white transition-all duration-300 hover:border-blue-300 dark:hover:border-blue-500"
                     placeholder="Tu nombre"
                   />
                 </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <div className="space-y-2">
+                  <label htmlFor="email" className="block text-sm font-bold text-gray-700 dark:text-gray-300">
                     Email
                   </label>
                   <input
@@ -113,12 +115,12 @@ const Contact: React.FC = () => {
                     value={formState.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    className="w-full px-5 py-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white transition-all duration-300 hover:border-blue-300 dark:hover:border-blue-500"
                     placeholder="tu@email.com"
                   />
                 </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <div className="space-y-2">
+                  <label htmlFor="message" className="block text-sm font-bold text-gray-700 dark:text-gray-300">
                     Mensaje
                   </label>
                   <textarea
@@ -128,48 +130,84 @@ const Contact: React.FC = () => {
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    className="w-full px-5 py-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white transition-all duration-300 hover:border-blue-300 dark:hover:border-blue-500 resize-none"
                     placeholder="Cuéntanos sobre tu proyecto..."
                   ></textarea>
                 </div>
+                {error && (
+                  <div className="p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm">
+                    {error}
+                  </div>
+                )}
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full btn btn-primary flex items-center justify-center gap-2"
+                  className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl font-bold text-lg shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/40 transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                      <div className="animate-spin rounded-full h-5 w-5 border-3 border-white border-t-transparent"></div>
                       Enviando...
                     </>
                   ) : (
                     <>
                       Enviar Mensaje
-                      <Send size={16} />
+                      <Send size={20} />
                     </>
                   )}
                 </button>
               </form>
             )}
+            </div>
           </div>
 
-          {/* Contacto lateral tipo lista con título y texto */}
-          <div className="flex flex-col gap-6 justify-center">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Ponte en Contacto</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
-              Ya seas una startup buscando construir tu primer producto o una empresa que busca modernizar sus sistemas, estamos aquí para aplicar nuestros conocimientos y ayudarte a tener éxito.
-            </p>
-            <div className="flex items-center gap-3">
-              <FaInstagram size={24} className="text-pink-500" />
-              <a href="https://www.instagram.com/alphasoft__/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-medium">@alphasoft__</a>
+          {/* Contact info cards */}
+          <div className="flex flex-col gap-8 justify-center">
+            <div>
+              <h3 className="text-3xl font-black text-gray-900 dark:text-white mb-4">Ponte en Contacto</h3>
+              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                Ya seas una startup buscando construir tu primer producto o una empresa que busca modernizar sus sistemas, estamos aquí para aplicar nuestros conocimientos y ayudarte a tener éxito.
+              </p>
             </div>
-            <div className="flex items-center gap-3">
-              <MdEmail size={24} className="text-blue-600" />
-              <a href="mailto:alphasoftwebs@gmail.com" className="text-blue-600 hover:underline font-medium">alphasoftwebs@gmail.com</a>
-            </div>
-            <div className="flex items-center gap-3">
-              <GoLocation size={24} className="text-green-600" />
-              <span className="text-blue-600 font-medium">Corrientes Capital</span>
+
+            <div className="space-y-4">
+              <a
+                href="https://www.instagram.com/alphasoft__/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-900/10 dark:to-purple-900/10 border border-pink-200 dark:border-pink-800 hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+              >
+                <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-pink-500 to-purple-600 text-white shadow-lg group-hover:scale-110 transition-transform">
+                  <FaInstagram size={26} />
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-gray-600 dark:text-gray-400">Instagram</div>
+                  <div className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">@alphasoft__</div>
+                </div>
+              </a>
+
+              <a
+                href="mailto:alphasoftwebs@gmail.com"
+                className="group flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/10 dark:to-cyan-900/10 border border-blue-200 dark:border-blue-800 hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+              >
+                <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-600 text-white shadow-lg group-hover:scale-110 transition-transform">
+                  <MdEmail size={28} />
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-gray-600 dark:text-gray-400">Email</div>
+                  <div className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors break-all">alphasoftwebs@gmail.com</div>
+                </div>
+              </a>
+
+              <div className="group flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/10 dark:to-emerald-900/10 border border-green-200 dark:border-green-800 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+                <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-lg group-hover:scale-110 transition-transform">
+                  <GoLocation size={28} />
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-gray-600 dark:text-gray-400">Ubicación</div>
+                  <div className="text-lg font-bold text-gray-900 dark:text-white">Corrientes Capital</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
