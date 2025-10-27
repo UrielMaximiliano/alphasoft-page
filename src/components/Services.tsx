@@ -1,76 +1,192 @@
-import React from 'react';
-import { 
-  Code2, 
-  Globe, 
-  Bot,
-  Zap
-} from 'lucide-react';
+"use client"
+
+import type React from "react"
+import { useEffect, useState, useRef, memo } from "react"
+import { Code2, Globe, Bot, Zap, Sparkles } from "lucide-react"
+import { motion, useScroll, useTransform } from "framer-motion"
 
 interface ServiceProps {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
+  icon: React.ReactNode
+  title: string
+  description: string
+  index: number
 }
 
-const ServiceCard: React.FC<ServiceProps> = ({ icon, title, description }) => (
-  <div className="group p-8 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300 hover:shadow-lg dark:hover:shadow-blue-500/10">
-    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-6 group-hover:scale-110 transition-transform">
-      {icon}
-    </div>
-    <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">{title}</h3>
-    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{description}</p>
-  </div>
-);
+const ServiceCard: React.FC<ServiceProps> = memo(({ icon, title, description, index }) => {
+  const [isVisible, setIsVisible] = useState(false)
+  const cardRef = useRef<HTMLDivElement>(null)
 
-const Services: React.FC = () => {
-  const services = [
-    {
-      icon: <Code2 size={24} />,
-      title: "Desarrollo Personalizado",
-      description: "Soluciones de software a medida construidas con las mejores prácticas y tecnologías modernas."
-    },
-    {
-      icon: <Globe size={24} />,
-      title: "Aplicaciones Web",
-      description: "Aplicaciones web responsivas y escalables que ayudan a impulsar el crecimiento de tu negocio."
-    },
-    {
-      icon: <Bot size={24} />,
-      title: "Chatbots Inteligentes",
-      description: "Chatbots con IA que mejoran la atención al cliente y automatizan conversaciones de manera eficiente."
-    },
-    {
-      icon: <Zap size={24} />,
-      title: "Automatizaciones",
-      description: "Automatizamos procesos empresariales para aumentar la eficiencia y optimizar costos operativos."
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect() // Disconnect after first intersection for performance
+        }
+      },
+      { threshold: 0.2 },
+    )
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current)
     }
-  ];
+
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <section id="services" className="py-24 bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+    <motion.div
+      ref={cardRef}
+      className="group relative p-8 rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-300 hover:shadow-2xl overflow-hidden will-change-transform"
+      initial={{ opacity: 0, y: 30 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      whileHover={{ scale: 1.03, y: -8 }}
+    >
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 transition-all duration-300"
+        whileHover={{
+          background: "linear-gradient(to bottom right, rgba(59,130,246,0.05), rgba(147,51,234,0.05))",
+        }}
+      />
+
+      <div className="relative z-10">
+        <motion.div
+          className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 text-white mb-6 shadow-lg will-change-transform"
+          whileHover={{ scale: 1.1, rotate: 180 }}
+          transition={{ duration: 0.4 }}
+        >
+          {icon}
+        </motion.div>
+        <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+          {title}
+        </h3>
+        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{description}</p>
+      </div>
+
+      <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-500/10 to-transparent rounded-bl-full"></div>
+    </motion.div>
+  )
+})
+
+ServiceCard.displayName = "ServiceCard"
+
+const Services: React.FC = () => {
+  const [titleVisible, setTitleVisible] = useState(false)
+  const titleRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  })
+
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -80])
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, 80])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTitleVisible(true)
+          observer.disconnect() // Disconnect after first intersection
+        }
+      },
+      { threshold: 0.2 },
+    )
+
+    if (titleRef.current) {
+      observer.observe(titleRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  const services = [
+    {
+      icon: <Code2 size={28} />,
+      title: "Desarrollo Personalizado",
+      description:
+        "Soluciones de software a medida construidas con las mejores prácticas y tecnologías modernas que impulsan tu negocio.",
+    },
+    {
+      icon: <Globe size={28} />,
+      title: "Aplicaciones Web",
+      description:
+        "Aplicaciones web responsivas, rápidas y escalables que ofrecen experiencias excepcionales en cualquier dispositivo.",
+    },
+    {
+      icon: <Bot size={28} />,
+      title: "Chatbots Inteligentes",
+      description:
+        "Chatbots con IA que transforman la atención al cliente y automatizan conversaciones de manera eficiente y natural.",
+    },
+    {
+      icon: <Zap size={28} />,
+      title: "Automatizaciones",
+      description:
+        "Automatizamos procesos empresariales para maximizar la eficiencia, reducir costos y liberar tiempo valioso.",
+    },
+  ]
+
+  return (
+    <section ref={sectionRef} id="services" className="py-32 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
+        <motion.div
+          className="absolute top-20 left-10 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl will-change-transform"
+          style={{ y: y1 }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-10 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl will-change-transform"
+          style={{ y: y2 }}
+        />
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <div ref={titleRef} className="text-center mb-20">
+          <motion.div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-semibold mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={titleVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.4 }}
+          >
+            <Sparkles size={18} />
+            <span>Lo que hacemos</span>
+          </motion.div>
+          <motion.h2
+            className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={titleVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
             Nuestros Servicios
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Soluciones de software integrales desarrolladas con dedicación y conocimiento técnico
-          </p>
+          </motion.h2>
+          <motion.p
+            className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={titleVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Soluciones de software integrales desarrolladas con{" "}
+            <span className="font-semibold text-blue-600 dark:text-blue-400">dedicación, creatividad</span> y
+            conocimiento técnico de vanguardia
+          </motion.p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {services.map((service, index) => (
             <ServiceCard
               key={index}
               icon={service.icon}
               title={service.title}
               description={service.description}
+              index={index}
             />
           ))}
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Services;
+export default memo(Services)

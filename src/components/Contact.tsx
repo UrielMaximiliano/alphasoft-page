@@ -1,181 +1,326 @@
-import React, { useState } from 'react';
-import { Send, Mail, MapPin, Phone, CheckCircle } from 'lucide-react';
-import emailjs from 'emailjs-com';
-import { FaInstagram } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
-import { GoLocation } from 'react-icons/go';
+"use client"
+
+import type React from "react"
+import { useState, useEffect, useRef, memo } from "react"
+import { Send, CheckCircle, Sparkles, Instagram, Mail, MapPin } from "lucide-react"
+import emailjs from "@emailjs/browser"
+import { motion } from "framer-motion"
+import { MagneticButton } from "./MagneticButton"
 
 const Contact: React.FC = () => {
   const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
+    name: "",
+    email: "",
+    message: "",
+  })
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect() // Disconnect after first intersection
+        }
+      },
+      { threshold: 0.1 },
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormState(prev => ({ ...prev, [name]: value }));
-  };
+    const { name, value } = e.target
+    setFormState((prev) => ({ ...prev, [name]: value }))
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError(null);
+    e.preventDefault()
+    setIsSubmitting(true)
+    setError(null)
 
-    // Reemplaza estos valores con los tuyos de EmailJS
-    const SERVICE_ID = 'service_x376u74';
-    const TEMPLATE_ID = 'template_wliji8o';
-    const USER_ID = 'ikCCwHpc74TUb7fYy';
+    const SERVICE_ID = "service_x376u74"
+    const TEMPLATE_ID = "template_wliji8o"
+    const USER_ID = "ikCCwHpc74TUb7fYy"
 
-    emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-      name: formState.name,
-      email: formState.email,
-      title: formState.message,
-    }, USER_ID)
+    emailjs
+      .send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          name: formState.name,
+          email: formState.email,
+          title: formState.message,
+        },
+        USER_ID,
+      )
       .then(() => {
-        setIsSubmitting(false);
-        setSubmitted(true);
-        setFormState({ name: '', email: '', message: '' });
-        setTimeout(() => setSubmitted(false), 5000);
+        setIsSubmitting(false)
+        setSubmitted(true)
+        setFormState({ name: "", email: "", message: "" })
+        setTimeout(() => setSubmitted(false), 5000)
       })
       .catch(() => {
-        setIsSubmitting(false);
-        setError('Ocurrió un error al enviar el mensaje. Intenta nuevamente.');
-      });
-  };
-
-  const contactInfo = [
-    {
-      icon: <Mail size={20} />,
-      title: "Email",
-      content: "alphasoftwebs@gmail.com"
-    },
-    {
-      icon: <MapPin size={20} />,
-      title: "Ubicación",
-      content: "Corrientes Capital"
-    }
-  ];
+        setIsSubmitting(false)
+        setError("Ocurrió un error al enviar el mensaje. Intenta nuevamente.")
+      })
+  }
 
   return (
-    <section id="contact" className="py-24 bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Trabajemos Juntos
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            ¿Listo para transformar tus ideas en realidad? Estamos aquí para ayudarte a crear soluciones innovadoras.
-          </p>
-        </div>
+    <section
+      ref={sectionRef}
+      id="contact"
+      className="py-32 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 relative overflow-hidden"
+    >
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/15 rounded-full blur-3xl animate-pulse"></div>
+        <div
+          className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/15 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        ></div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="text-center mb-20"
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold mb-6 shadow-lg"
+          >
+            <Sparkles size={18} />
+            <span>Contáctanos</span>
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6"
+          >
+            Trabajemos{" "}
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Juntos</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
+          >
+            ¿Listo para transformar tus ideas en realidad? Estamos aquí para ayudarte a crear{" "}
+            <span className="font-semibold text-blue-600 dark:text-blue-400">soluciones innovadoras</span> que impulsen
+            tu negocio.
+          </motion.p>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
-            {submitted ? (
-              <div className="text-center py-12">
-                <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle size={32} />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">¡Gracias!</h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Te responderemos dentro de 24 horas.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Nombre
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formState.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    placeholder="Tu nombre"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formState.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    placeholder="tu@email.com"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Mensaje
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formState.message}
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    placeholder="Cuéntanos sobre tu proyecto..."
-                  ></textarea>
-                </div>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full btn btn-primary flex items-center justify-center gap-2"
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="relative group"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              transition={{ duration: 0.2 }}
+              className="relative bg-white dark:bg-gray-800 rounded-3xl p-10 shadow-2xl border border-gray-200 dark:border-gray-700"
+            >
+              {submitted ? (
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.4 }}
+                  className="text-center py-12"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                      Enviando...
-                    </>
-                  ) : (
-                    <>
-                      Enviar Mensaje
-                      <Send size={16} />
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
-          </div>
+                  <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                    <CheckCircle size={40} />
+                  </div>
+                  <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">¡Gracias!</h3>
+                  <p className="text-lg text-gray-600 dark:text-gray-300">Te responderemos dentro de 24 horas.</p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                      Nombre
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formState.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-5 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-all"
+                      placeholder="Tu nombre"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formState.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-5 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-all"
+                      placeholder="tu@email.com"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                    >
+                      Mensaje
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formState.message}
+                      onChange={handleChange}
+                      required
+                      rows={5}
+                      className="w-full px-5 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-all resize-none"
+                      placeholder="Cuéntanos sobre tu proyecto..."
+                    ></textarea>
+                  </div>
+                  <MagneticButton
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full btn btn-primary flex items-center justify-center gap-2 text-lg py-4"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                        Enviando...
+                      </>
+                    ) : (
+                      <>
+                        Enviar Mensaje
+                        <Send size={18} />
+                      </>
+                    )}
+                  </MagneticButton>
+                </form>
+              )}
+            </motion.div>
+          </motion.div>
 
-          {/* Contacto lateral tipo lista con título y texto */}
-          <div className="flex flex-col gap-6 justify-center">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Ponte en Contacto</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
-              Ya seas una startup buscando construir tu primer producto o una empresa que busca modernizar sus sistemas, estamos aquí para aplicar nuestros conocimientos y ayudarte a tener éxito.
-            </p>
-            <div className="flex items-center gap-3">
-              <FaInstagram size={24} className="text-pink-500" />
-              <a href="https://www.instagram.com/alphasoft__/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-medium">@alphasoft__</a>
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="flex flex-col gap-8 justify-center"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Ponte en Contacto</h3>
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+                Ya seas una startup buscando construir tu primer producto o una empresa que busca modernizar sus
+                sistemas, estamos aquí para aplicar nuestros conocimientos y ayudarte a tener éxito.
+              </p>
+            </motion.div>
+
+            <div className="space-y-6">
+              <motion.a
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.03 }}
+                href="https://www.instagram.com/alphasoft__/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 border border-pink-200 dark:border-pink-800 transition-all duration-300 group"
+              >
+                <motion.div
+                  whileHover={{ rotate: 180 }}
+                  transition={{ duration: 0.4 }}
+                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white will-change-transform"
+                >
+                  <Instagram size={24} />
+                </motion.div>
+                <div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Instagram</p>
+                  <p className="text-lg font-bold text-gray-900 dark:text-white">@alphasoft__</p>
+                </div>
+              </motion.a>
+
+              <motion.a
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.03 }}
+                href="mailto:alphasoftwebs@gmail.com"
+                className="flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-800 transition-all duration-300 group"
+              >
+                <motion.div
+                  whileHover={{ rotate: 180 }}
+                  transition={{ duration: 0.4 }}
+                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-white will-change-transform"
+                >
+                  <Mail size={24} />
+                </motion.div>
+                <div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Email</p>
+                  <p className="text-lg font-bold text-gray-900 dark:text-white">alphasoftwebs@gmail.com</p>
+                </div>
+              </motion.a>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: 0.4 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.03 }}
+                className="flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800"
+              >
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white">
+                  <MapPin size={24} />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Ubicación</p>
+                  <p className="text-lg font-bold text-gray-900 dark:text-white">Corrientes Capital</p>
+                </div>
+              </motion.div>
             </div>
-            <div className="flex items-center gap-3">
-              <MdEmail size={24} className="text-blue-600" />
-              <a href="mailto:alphasoftwebs@gmail.com" className="text-blue-600 hover:underline font-medium">alphasoftwebs@gmail.com</a>
-            </div>
-            <div className="flex items-center gap-3">
-              <GoLocation size={24} className="text-green-600" />
-              <span className="text-blue-600 font-medium">Corrientes Capital</span>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Contact;
+export default memo(Contact)
