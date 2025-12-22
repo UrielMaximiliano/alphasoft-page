@@ -1,27 +1,48 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
+import { Providers } from "@/components/Providers"
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  title: "AlphaSoft - Soluciones de Software Innovadoras",
+  description:
+    "Transformamos ideas en experiencias digitales extraordinarias. Desarrollo web, aplicaciones, chatbots inteligentes y automatizaciones.",
+  keywords: [
+    "desarrollo web",
+    "software",
+    "aplicaciones",
+    "chatbots",
+    "automatizaciones",
+    "AlphaSoft",
+  ],
+  authors: [{ name: "AlphaSoft" }],
+  icons: {
+    icon: "/logo.jpg",
+    shortcut: "/logo.jpg",
+    apple: "/logo.jpg",
+  },
+  openGraph: {
+    title: "AlphaSoft - Soluciones de Software Innovadoras",
+    description:
+      "Transformamos ideas en experiencias digitales extraordinarias.",
+    type: "website",
+    images: ["/logo.jpg"],
+  },
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body className={`font-sans antialiased`}>
-        {children}
-        <Analytics />
+    <html lang="es" suppressHydrationWarning>
+      <body className={`${inter.className} bg-white dark:bg-gray-900`}>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   )
