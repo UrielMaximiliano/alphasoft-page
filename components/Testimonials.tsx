@@ -26,7 +26,7 @@ const projects = [
     icon: <Activity size={28} />,
     gradient: "from-violet-500 to-blue-500",
     bgGradient: "from-violet-500/10 to-blue-500/10",
-    location: "Resistencia, Chaco",
+    location: "Corrientes Capital",
   },
 ]
 
