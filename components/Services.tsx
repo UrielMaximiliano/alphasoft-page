@@ -1,86 +1,131 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
-import { Code2, Globe, Bot, Zap, ArrowRight, Sparkles } from "lucide-react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { useRef } from "react"
+import { Code2, Globe, Bot, Zap, ArrowRight, Sparkles, Star } from "lucide-react"
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion"
 
 interface ServiceProps {
   icon: React.ReactNode
   title: string
   description: string
   gradient: string
+  features: string[]
+  popular?: boolean
   index: number
 }
 
-function ServiceCard({ icon, title, description, gradient, index }: ServiceProps) {
-  const [isVisible, setIsVisible] = useState(false)
-  const cardRef = useRef<HTMLDivElement>(null)
+function ServiceCard({ icon, title, description, gradient, features, popular, index }: ServiceProps) {
+  const rotateXVal = useMotionValue(0)
+  const rotateYVal = useMotionValue(0)
+  const smoothRotateX = useSpring(rotateXVal, { stiffness: 200, damping: 25 })
+  const smoothRotateY = useSpring(rotateYVal, { stiffness: 200, damping: 25 })
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.2 }
-    )
-
-    if (cardRef.current) {
-      observer.observe(cardRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    rotateXVal.set(((e.clientY - rect.top) / rect.height - 0.5) * 14)
+    rotateYVal.set(((e.clientX - rect.left) / rect.width - 0.5) * -14)
+  }
 
   return (
     <motion.div
-      ref={cardRef}
-      className="group relative p-8 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-transparent transition-all duration-500 hover:shadow-2xl"
+      className={`group relative p-8 rounded-3xl transition-shadow duration-500 hover:shadow-2xl ${
+        popular
+          ? "bg-gradient-to-br from-blue-600 to-violet-600 text-white ring-2 ring-violet-400/50 shadow-xl shadow-violet-500/20"
+          : "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-transparent"
+      }`}
       initial={{ opacity: 0, y: 30 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -8, scale: 1.02 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => { rotateXVal.set(0); rotateYVal.set(0) }}
+      style={{
+        transformPerspective: 1000,
+        rotateX: smoothRotateX,
+        rotateY: smoothRotateY,
+        transformStyle: "preserve-3d",
+      }}
     >
-      {/* Gradient overlay on hover */}
-      <div
-        className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-500`}
-      />
+      {/* Popular badge */}
+      {popular && (
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900 text-xs font-black rounded-full shadow-lg flex items-center gap-1.5 uppercase tracking-wider">
+          <Star size={12} fill="currentColor" />
+          Más solicitado
+        </div>
+      )}
 
-      {/* Icon with gradient background */}
+      {/* Gradient overlay on hover (non-popular only) */}
+      {!popular && (
+        <div
+          className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-500`}
+        />
+      )}
+
+      {/* Icon */}
       <div className="relative">
         <motion.div
-          className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${gradient} text-white mb-6 shadow-lg`}
+          className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl ${
+            popular
+              ? "bg-white/20 text-white"
+              : `bg-gradient-to-br ${gradient} text-white shadow-lg`
+          } mb-6`}
           whileHover={{ scale: 1.1, rotate: 5 }}
           transition={{ duration: 0.3 }}
         >
           {icon}
         </motion.div>
-        <div
-          className={`absolute top-0 left-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${gradient} blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-500`}
-        />
+        {!popular && (
+          <div
+            className={`absolute top-0 left-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${gradient} blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-500`}
+          />
+        )}
       </div>
 
-      <h3 className="relative text-2xl font-bold mb-4 text-gray-900 dark:text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 dark:group-hover:from-blue-400 dark:group-hover:to-purple-400 group-hover:bg-clip-text transition-all duration-300">
+      <h3 className={`relative text-2xl font-bold mb-3 ${
+        popular
+          ? "text-white"
+          : "text-gray-900 dark:text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-violet-500 dark:group-hover:from-blue-400 dark:group-hover:to-violet-400 group-hover:bg-clip-text"
+      } transition-all duration-300`}>
         {title}
       </h3>
-      <p className="relative text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+      <p className={`relative leading-relaxed mb-6 ${
+        popular ? "text-white/80" : "text-gray-600 dark:text-gray-300"
+      }`}>
         {description}
       </p>
 
-      {/* Learn more link */}
-      <div className="relative flex items-center gap-2 text-blue-600 dark:text-blue-400 font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300">
-        <span>Más información</span>
-        <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-      </div>
+      {/* Feature list */}
+      <ul className="relative space-y-2 mb-6">
+        {features.map((feature) => (
+          <li key={feature} className={`flex items-center gap-2 text-sm ${
+            popular ? "text-white/90" : "text-gray-600 dark:text-gray-400"
+          }`}>
+            <div className={`w-1.5 h-1.5 rounded-full ${
+              popular ? "bg-white/80" : "bg-blue-500"
+            }`} />
+            {feature}
+          </li>
+        ))}
+      </ul>
+
+      {/* CTA link */}
+      <motion.a
+        href="#contact"
+        className={`relative inline-flex items-center gap-2 font-semibold text-sm ${
+          popular
+            ? "text-white hover:text-white/90"
+            : "text-blue-600 dark:text-blue-400"
+        } transition-all duration-300`}
+        whileHover={{ x: 4 }}
+      >
+        <span>Solicitar cotización</span>
+        <ArrowRight size={16} />
+      </motion.a>
     </motion.div>
   )
 }
 
 export default function Services() {
-  const [titleVisible, setTitleVisible] = useState(false)
-  const titleRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
 
   const { scrollYProgress } = useScroll({
@@ -91,52 +136,39 @@ export default function Services() {
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -80])
   const y2 = useTransform(scrollYProgress, [0, 1], [0, 80])
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTitleVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.2 }
-    )
-
-    if (titleRef.current) {
-      observer.observe(titleRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
-
   const services = [
     {
       icon: <Code2 size={28} />,
-      title: "Desarrollo Personalizado",
+      title: "Desarrollo a Medida",
       description:
-        "Soluciones de software a medida construidas con las mejores prácticas y tecnologías modernas que impulsan tu negocio.",
-      gradient: "from-blue-500 to-cyan-500",
+        "Software personalizado con arquitectura robusta que escala con tu negocio y resuelve problemas reales.",
+      gradient: "from-blue-500 to-blue-600",
+      features: ["Stack moderno (React, Next.js, Node)", "Arquitectura escalable", "Código mantenible y documentado"],
     },
     {
       icon: <Globe size={28} />,
       title: "Aplicaciones Web",
       description:
-        "Aplicaciones web responsivas, rápidas y escalables que ofrecen experiencias excepcionales en cualquier dispositivo.",
-      gradient: "from-green-500 to-emerald-500",
+        "Apps rápidas, responsive y optimizadas para SEO que convierten visitantes en clientes.",
+      gradient: "from-teal-500 to-teal-600",
+      features: ["Rendimiento optimizado", "Diseño responsive", "SEO y accesibilidad"],
     },
     {
       icon: <Bot size={28} />,
-      title: "Chatbots Inteligentes",
+      title: "Chatbots con IA",
       description:
-        "Chatbots con IA que transforman la atención al cliente y automatizan conversaciones de manera eficiente y natural.",
-      gradient: "from-purple-500 to-pink-500",
+        "Asistentes inteligentes que atienden 24/7, reducen costos y mejoran la experiencia de tus clientes.",
+      gradient: "from-violet-500 to-violet-600",
+      features: ["Integración con WhatsApp e Instagram", "Respuestas naturales con IA", "Análisis de conversaciones"],
+      popular: true,
     },
     {
       icon: <Zap size={28} />,
       title: "Automatizaciones",
       description:
-        "Automatizamos procesos empresariales para maximizar la eficiencia, reducir costos y liberar tiempo valioso.",
-      gradient: "from-orange-500 to-red-500",
+        "Eliminamos tareas repetitivas y conectamos tus herramientas para que tu equipo se enfoque en crecer.",
+      gradient: "from-amber-500 to-amber-600",
+      features: ["Flujos de trabajo automatizados", "Integración entre plataformas", "Reducción de errores humanos"],
     },
   ]
 
@@ -144,7 +176,7 @@ export default function Services() {
     <section
       ref={sectionRef}
       id="services"
-      className="py-32 bg-gray-50 dark:bg-gray-900 relative overflow-hidden"
+      className="py-32 bg-gray-50 dark:bg-gray-900/50 relative overflow-hidden"
     >
       {/* Background decorations */}
       <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
@@ -153,18 +185,19 @@ export default function Services() {
           style={{ y: y1 }}
         />
         <motion.div
-          className="absolute bottom-20 right-10 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl will-change-transform"
+          className="absolute bottom-20 right-10 w-80 h-80 bg-violet-500/10 rounded-full blur-3xl will-change-transform"
           style={{ y: y2 }}
         />
       </div>
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <div ref={titleRef} className="text-center mb-20">
+        <div className="text-center mb-20">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={titleVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold mb-6 shadow-lg"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold mb-6 shadow-lg"
           >
             <Sparkles size={18} />
             <span>Nuestros Servicios</span>
@@ -172,24 +205,27 @@ export default function Services() {
 
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
-            animate={titleVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6"
           >
-            Lo que{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              ofrecemos
+            Soluciones que{" "}
+            <span className="bg-gradient-to-r from-blue-600 to-violet-500 bg-clip-text text-transparent">
+              generan impacto
             </span>
           </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
-            animate={titleVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
           >
-            Soluciones completas para llevar tu negocio al siguiente nivel con
-            tecnología de vanguardia.
+            Cada servicio está diseñado para resolver problemas reales y entregar{" "}
+            <span className="font-semibold text-gray-900 dark:text-white">valor medible</span>{" "}
+            a tu negocio.
           </motion.p>
         </div>
 
@@ -198,6 +234,28 @@ export default function Services() {
             <ServiceCard key={service.title} {...service} index={index} />
           ))}
         </div>
+
+        {/* Bottom CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-16 text-center"
+        >
+          <p className="text-gray-500 dark:text-gray-400 mb-4">
+            ¿No encontrás lo que buscás? Contamos con soluciones personalizadas para cada necesidad.
+          </p>
+          <motion.a
+            href="#contact"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold hover:underline"
+          >
+            Hablemos de tu proyecto
+            <ArrowRight size={18} />
+          </motion.a>
+        </motion.div>
       </div>
     </section>
   )

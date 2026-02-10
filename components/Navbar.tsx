@@ -15,7 +15,7 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
 
-      const sections = ["services", "about", "contact"]
+      const sections = ["services", "portfolio", "process", "about", "contact"]
       const current = sections.find((section) => {
         const element = document.getElementById(section)
         if (element) {
@@ -33,6 +33,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: "#services", label: "Servicios" },
+    { href: "#portfolio", label: "Portfolio" },
     { href: "#about", label: "Nosotros" },
     { href: "#contact", label: "Contacto" },
   ]
@@ -53,7 +54,7 @@ export default function Navbar() {
           <motion.div className="flex items-center" whileHover={{ scale: 1.05 }}>
             <a href="#" className="flex items-center gap-3 group">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-violet-500 rounded-xl blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
                 <motion.div
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.6 }}
@@ -68,7 +69,7 @@ export default function Navbar() {
                   />
                 </motion.div>
               </div>
-              <span className="font-black text-2xl bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent group-hover:from-blue-600 group-hover:to-purple-600 dark:group-hover:from-blue-400 dark:group-hover:to-purple-400 transition-all duration-300">
+              <span className="font-black text-2xl bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent group-hover:from-blue-600 group-hover:to-violet-500 dark:group-hover:from-blue-400 dark:group-hover:to-violet-400 transition-all duration-300">
                 AlphaSoft
               </span>
             </a>
@@ -108,7 +109,7 @@ export default function Navbar() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               href="#contact"
-              className="ml-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-300 inline-flex items-center gap-2"
+              className="ml-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-violet-600 text-white rounded-xl font-bold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-violet-500/40 transition-all duration-300 inline-flex items-center gap-2"
             >
               <Sparkles size={16} />
               Comenzar
@@ -160,7 +161,7 @@ export default function Navbar() {
                 transition={{ duration: 0.3, delay: 0.3 }}
                 href="#contact"
                 onClick={() => setIsMenuOpen(false)}
-                className="block w-full px-6 py-3 text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold shadow-lg"
+                className="block w-full px-6 py-3 text-center bg-gradient-to-r from-blue-600 to-violet-600 text-white rounded-xl font-bold shadow-lg"
               >
                 <span className="flex items-center justify-center gap-2">
                   <Sparkles size={18} />

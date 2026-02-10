@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import { Send, CheckCircle, Sparkles, Instagram, Mail, MapPin } from "lucide-react"
+import { useState, useRef } from "react"
+import { Send, CheckCircle, Sparkles, Instagram, Mail, MapPin, Clock } from "lucide-react"
 import emailjs from "@emailjs/browser"
 import { motion } from "framer-motion"
 
@@ -15,26 +15,7 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -81,27 +62,27 @@ export default function Contact() {
       label: "Instagram",
       value: "@alphasoft__",
       href: "https://www.instagram.com/alphasoft__/",
-      gradient: "from-pink-500 to-purple-600",
-      bgGradient: "from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20",
-      borderColor: "border-pink-200 dark:border-pink-800",
+      gradient: "from-violet-500 to-violet-600",
+      bgGradient: "from-violet-50/50 to-slate-50 dark:from-violet-900/10 dark:to-slate-900/20",
+      borderColor: "border-violet-200/50 dark:border-violet-800/30",
     },
     {
       icon: <Mail size={24} />,
       label: "Email",
       value: "alphasoftwebs@gmail.com",
       href: "mailto:alphasoftwebs@gmail.com",
-      gradient: "from-blue-500 to-cyan-600",
-      bgGradient: "from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20",
-      borderColor: "border-blue-200 dark:border-blue-800",
+      gradient: "from-blue-500 to-blue-600",
+      bgGradient: "from-blue-50/50 to-slate-50 dark:from-blue-900/10 dark:to-slate-900/20",
+      borderColor: "border-blue-200/50 dark:border-blue-800/30",
     },
     {
       icon: <MapPin size={24} />,
       label: "Ubicación",
       value: "Remoto / Global",
       href: null,
-      gradient: "from-green-500 to-emerald-600",
-      bgGradient: "from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20",
-      borderColor: "border-green-200 dark:border-green-800",
+      gradient: "from-teal-500 to-teal-600",
+      bgGradient: "from-teal-50/50 to-slate-50 dark:from-teal-900/10 dark:to-slate-900/20",
+      borderColor: "border-teal-200/50 dark:border-teal-800/30",
     },
   ]
 
@@ -113,11 +94,8 @@ export default function Contact() {
     >
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/15 rounded-full blur-3xl animate-pulse" />
-        <div
-          className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/15 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "1s" }}
-        />
+        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-blob" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl animate-blob" style={{ animationDelay: "2s" }} />
       </div>
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
@@ -133,7 +111,7 @@ export default function Contact() {
             whileInView={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.4 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold mb-6 shadow-lg"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold mb-6 shadow-lg"
           >
             <Sparkles size={18} />
             <span>Contáctanos</span>
@@ -146,9 +124,9 @@ export default function Contact() {
             viewport={{ once: true }}
             className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6"
           >
-            Trabajemos{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Juntos
+            Convertí tu idea en{" "}
+            <span className="bg-gradient-to-r from-blue-600 to-violet-500 bg-clip-text text-transparent">
+              realidad
             </span>
           </motion.h2>
 
@@ -159,12 +137,11 @@ export default function Contact() {
             viewport={{ once: true }}
             className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
           >
-            ¿Listo para transformar tus ideas en realidad? Estamos aquí para
-            ayudarte a crear{" "}
-            <span className="font-semibold text-blue-600 dark:text-blue-400">
-              soluciones innovadoras
-            </span>{" "}
-            que impulsen tu negocio.
+            Contanos sobre tu proyecto y recibí una{" "}
+            <span className="font-bold text-blue-600 dark:text-blue-400">
+              propuesta personalizada en menos de 24 horas
+            </span>
+            . Sin compromisos, sin letra chica.
           </motion.p>
         </motion.div>
 
@@ -177,7 +154,7 @@ export default function Contact() {
             viewport={{ once: true }}
             className="relative group"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-violet-600 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
             <motion.div
               whileHover={{ scale: 1.01 }}
               transition={{ duration: 0.2 }}
@@ -295,13 +272,21 @@ export default function Contact() {
           >
             <div>
               <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-                Ponte en Contacto
+                ¿Por qué elegirnos?
               </h3>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                Ya seas una startup buscando construir tu primer producto o una
-                empresa que busca modernizar sus sistemas, estamos aquí para
-                aplicar nuestros conocimientos y ayudarte a tener éxito.
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                Trabajás directamente con los desarrolladores, sin intermediarios. 
+                Eso significa comunicación clara, entregas ágiles y un producto final 
+                que refleja exactamente lo que necesitás.
               </p>
+
+              {/* Urgency element */}
+              <div className="flex items-center gap-3 px-5 py-3 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 mb-8">
+                <Clock size={20} className="text-amber-600 dark:text-amber-400 flex-shrink-0" />
+                <p className="text-sm font-medium text-amber-700 dark:text-amber-300">
+                  Cupos limitados por mes para garantizar calidad en cada proyecto.
+                </p>
+              </div>
             </div>
 
             <div className="space-y-4">
